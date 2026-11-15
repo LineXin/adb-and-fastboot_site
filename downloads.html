@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Downloads — ADB & FASTBOOT LineXin Edition</title>
+<meta name="description" content="Скачать установщик ADB & FASTBOOT LineXin Edition для Windows.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Unbounded:wght@500;700&family=Manrope:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0d0f17;--panel:rgba(255,255,255,.045);--line:rgba(255,255,255,.09);--tx:#e8ecf4;--mu:#8d96aa;--ac:#00d8d6;--ac-rgb:0,216,214;
+--fd:'Unbounded','Segoe UI',sans-serif;--fb:'Manrope','Segoe UI',sans-serif;--fm:'JetBrains Mono',Consolas,monospace}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--tx);font:400 16px/1.6 var(--fb);overflow-x:hidden;min-height:100vh;display:flex;flex-direction:column;
+background-image:radial-gradient(900px 500px at 80% -5%,rgba(var(--ac-rgb),.16),transparent 60%),radial-gradient(700px 400px at 0% 40%,rgba(120,90,255,.08),transparent 60%)}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--ac);outline-offset:3px;border-radius:6px}
+.wrap{max-width:1160px;margin:0 auto;padding:0 20px;width:100%}
+h1,h2,h3{font-family:var(--fd);font-weight:700;line-height:1.15;letter-spacing:-.01em}
+.lead{color:var(--mu);max-width:62ch}
+
+header{position:sticky;top:0;z-index:50;background:rgba(13,15,23,.78);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.bar{display:flex;align-items:center;gap:18px;height:64px}
+.logo{display:flex;align-items:center;gap:10px;font-family:var(--fd);font-weight:700;font-size:15px}
+.logo i{display:grid;place-items:center;width:34px;height:34px;border-radius:9px;font-style:normal;font-size:13px;color:#06121a;background:var(--ac);box-shadow:0 0 18px rgba(var(--ac-rgb),.55)}
+nav{display:flex;gap:22px;margin-left:auto;font-size:14px;color:var(--mu)}
+nav a:hover,nav a.active{color:var(--tx)}
+.tools{display:flex;align-items:center;gap:10px}
+.sw{display:flex;gap:6px;align-items:center}
+.sw button,.sw label{width:18px;height:18px;border-radius:50%;border:2px solid transparent;cursor:pointer;background:var(--c);padding:0;transition:transform .15s}
+.sw button:hover,.sw label:hover{transform:scale(1.2)}
+.sw .on{border-color:#fff}
+.sw label{background:conic-gradient(#f55,#fc3,#5f5,#3ff,#55f,#f5f,#f55);position:relative;overflow:hidden}
+.sw input{position:absolute;inset:-6px;opacity:0;cursor:pointer}
+.btn{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--panel);color:var(--tx);padding:8px 14px;border-radius:10px;font:600 13px var(--fb);cursor:pointer;transition:.2s}
+.btn:hover{border-color:var(--ac);box-shadow:0 0 14px rgba(var(--ac-rgb),.3)}
+.btn svg{width:16px;height:16px}
+.lang{font-family:var(--fm);padding:8px 11px}
+.burger{display:none}
+
+main{padding:70px 0 84px;flex:1}
+.top-head{text-align:center;margin-bottom:44px}
+.chip{display:inline-flex;gap:8px;align-items:center;font:500 12px var(--fm);color:var(--ac);border:1px solid rgba(var(--ac-rgb),.35);background:rgba(var(--ac-rgb),.08);padding:6px 14px;border-radius:99px;margin-bottom:20px}
+.chip b{width:7px;height:7px;border-radius:50%;background:var(--ac);box-shadow:0 0 10px var(--ac)}
+h1{font-size:clamp(30px,5vw,52px);margin-bottom:14px}
+h1 span{color:var(--ac);text-shadow:0 0 30px rgba(var(--ac-rgb),.45)}
+.top-head .lead{margin:0 auto}
+
+.dl-box{max-width:780px;margin:0 auto;padding:34px;border-radius:20px;border:1px solid rgba(var(--ac-rgb),.35);background:var(--panel);backdrop-filter:blur(10px);box-shadow:0 20px 70px rgba(0,0,0,.45),0 0 50px rgba(var(--ac-rgb),.1)}
+.dl-row{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+.dl-info h2{font-size:22px;margin-bottom:6px}
+.meta{font:400 13px var(--fm);color:var(--mu)}
+.cta{display:inline-flex;align-items:center;gap:12px;background:var(--ac);color:#04141a;font:700 15px var(--fb);padding:15px 26px;border-radius:14px;box-shadow:0 0 0 1px rgba(255,255,255,.2) inset,0 10px 35px rgba(var(--ac-rgb),.4);transition:.2s}
+.cta:hover{transform:translateY(-2px);box-shadow:0 0 0 1px rgba(255,255,255,.3) inset,0 14px 48px rgba(var(--ac-rgb),.6)}
+.cta svg{width:20px;height:20px}
+.notes{margin-top:26px;padding-top:22px;border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:16px}
+.notes h3{font-size:14px;color:var(--ac);margin-bottom:6px}
+.notes p{color:var(--mu);font-size:14px}
+
+footer{border-top:1px solid var(--line);padding:30px 0;color:var(--mu);font-size:14px}
+footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:center}
+footer nav{margin:0}footer a:hover{color:var(--ac)}
+
+@media(max-width:860px){
+nav{display:none;position:absolute;top:64px;left:0;right:0;flex-direction:column;background:#0d0f17;padding:18px 20px;border-bottom:1px solid var(--line)}
+nav.open{display:flex}.burger{display:inline-flex;margin-left:auto}
+.bar>.logo+nav+.tools{margin-left:0}
+.sw.hd{display:none}
+.dl-box{padding:22px}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap bar">
+    <a class="logo" href="index.html"><i>LX</i><span>ADB & FASTBOOT</span></a>
+    <nav id="nav">
+      <a href="index.html#features" data-i18n="n_features">Возможности</a>
+      <a href="index.html#start" data-i18n="n_start">Быстрый старт</a>
+      <a href="downloads.html" class="active" data-i18n="n_dl">Downloads</a>
+    </nav>
+    <div class="tools">
+      <div class="sw hd" data-sw aria-label="Accent color"></div>
+      <button class="btn lang" id="lang" aria-label="Language">EN</button>
+      <a class="btn" href="https://github.com/linexin" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.52-1.33-1.28-1.69-1.28-1.69-1.05-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.76 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.18 1.83 1.18 3.09 0 4.42-2.7 5.4-5.26 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5z"/></svg>GitHub</a>
+      <button class="btn burger" id="burger" aria-label="Menu">☰</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <div class="top-head">
+      <div class="chip"><b></b><span data-i18n="chip">Releases · Windows</span></div>
+      <h1 data-i18n-html="h1"><span>Downloads</span> — LineXin Edition</h1>
+      <p class="lead" data-i18n="lead">Выберите установщик для вашей системы и скачайте актуальную сборку утилиты.</p>
+    </div>
+
+    <div class="dl-box">
+      <div class="dl-row">
+        <div class="dl-info">
+          <h2 data-i18n="win_title">Скачать для Windows</h2>
+          <div class="meta" data-i18n="win_meta">Windows 10 / 11 (x64) · Installer (.exe) · v1.0</div>
+        </div>
+        <a class="cta" href="ВАША_ССЫЛКА_ИЗ_RELEASES">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0l-5-5m5 5l5-5M4 20h16"/></svg>
+          <span data-i18n="dl_btn">Скачать для Windows</span>
+        </a>
+      </div>
+
+      <div class="notes">
+        <div>
+          <h3 data-i18n="n1_t">Platform Tools</h3>
+          <p data-i18n="n1_p">Загружаются автоматически при первом запуске программы.</p>
+        </div>
+        <div>
+          <h3 data-i18n="n2_t">Подключение</h3>
+          <p data-i18n="n2_p">Нужен кабель USB, драйверы и включённая отладка по USB.</p>
+        </div>
+        <div>
+          <h3 data-i18n="n3_t">Все релизы</h3>
+          <p><a href="https://github.com/linexin" target="_blank" rel="noopener" style="color:var(--ac)" data-i18n="n3_p">Открыть GitHub Releases →</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 LineXin</span>
+    <nav style="display:flex">
+      <a href="index.html" data-i18n="n_home">Главная</a>
+      <a href="https://github.com/linexin1" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://t.me/linexin" target="_blank" rel="noopener">Telegram</a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+(function(){
+'use strict';
+var I={
+ru:{n_features:'Возможности',n_start:'Быстрый старт',n_dl:'Downloads',n_home:'Главная',
+chip:'Releases · Windows',
+h1:'<span>Downloads</span> — LineXin Edition',
+lead:'Выберите установщик для вашей системы и скачайте актуальную сборку утилиты.',
+win_title:'Скачать для Windows',
+win_meta:'Windows 10 / 11 (x64) · Installer (.exe) · v1.0',
+dl_btn:'Скачать для Windows',
+n1_t:'Platform Tools',n1_p:'Загружаются автоматически при первом запуске программы.',
+n2_t:'Подключение',n2_p:'Нужен кабель USB, драйверы и включённая отладка по USB.',
+n3_t:'Все релизы',n3_p:'Открыть GitHub Releases →'},
+en:{n_features:'Features',n_start:'Quick start',n_dl:'Downloads',n_home:'Home',
+chip:'Releases · Windows',
+h1:'<span>Downloads</span> — LineXin Edition',
+lead:'Choose the installer for your system and download the latest build.',
+win_title:'Download for Windows',
+win_meta:'Windows 10 / 11 (x64) · Installer (.exe) · v1.0',
+dl_btn:'Download for Windows',
+n1_t:'Platform Tools',n1_p:'Downloaded automatically on first launch.',
+n2_t:'Connection',n2_p:'Requires USB cable, drivers and USB debugging enabled.',
+n3_t:'All releases',n3_p:'Open GitHub Releases →'}};
+var THEMES=['#00d8d6','#a855f7','#22c55e','#f97316','#ef4444'];
+var lang='ru';
+
+function $$(s){return Array.prototype.slice.call(document.querySelectorAll(s))}
+function hexRgb(h){var n=parseInt(h.slice(1),16);return[n>>16&255,n>>8&255,n&255].join(',')}
+function setAccent(h){var r=document.documentElement.style;r.setProperty('--ac',h);r.setProperty('--ac-rgb',hexRgb(h));
+$$('[data-sw] button').forEach(function(b){b.classList.toggle('on',b.dataset.c===h)})}
+
+$$('[data-sw]').forEach(function(box){
+THEMES.forEach(function(c){var b=document.createElement('button');b.style.setProperty('--c',c);b.dataset.c=c;b.setAttribute('aria-label',c);
+b.onclick=function(){setAccent(c)};box.appendChild(b)});
+var l=document.createElement('label');l.title='Color Picker';var i=document.createElement('input');i.type='color';i.value='#00d8d6';
+i.oninput=function(){setAccent(i.value)};l.appendChild(i);box.appendChild(l)});
+setAccent(THEMES[0]);
+
+function apply(){
+var d=I[lang];document.documentElement.lang=lang;
+$$('[data-i18n]').forEach(function(e){if(d[e.dataset.i18n]!==undefined)e.textContent=d[e.dataset.i18n]});
+$$('[data-i18n-html]').forEach(function(e){e.innerHTML=d[e.dataset.i18nHtml]});
+document.getElementById('lang').textContent=lang==='ru'?'EN':'RU';}
+document.getElementById('lang').onclick=function(){lang=lang==='ru'?'en':'ru';apply()};
+
+var nav=document.getElementById('nav');
+document.getElementById('burger').onclick=function(){nav.classList.toggle('open')};
+$$('#nav a').forEach(function(a){a.onclick=function(){nav.classList.remove('open')}});
+
+apply();
+})();
+</script>
+</body>
+</html>
