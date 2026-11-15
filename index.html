@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ADB & FASTBOOT LineXin Edition</title>
+<meta name="description" content="Графическая утилита для прошивки и настройки Android без командной строки.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Unbounded:wght@500;700&family=Manrope:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0d0f17;--panel:rgba(255,255,255,.045);--line:rgba(255,255,255,.09);--tx:#e8ecf4;--mu:#8d96aa;--ac:#00d8d6;--ac-rgb:0,216,214;
+--fd:'Unbounded','Segoe UI',sans-serif;--fb:'Manrope','Segoe UI',sans-serif;--fm:'JetBrains Mono',Consolas,monospace}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{background:var(--bg);color:var(--tx);font:400 16px/1.6 var(--fb);overflow-x:hidden;
+background-image:radial-gradient(900px 500px at 80% -5%,rgba(var(--ac-rgb),.16),transparent 60%),radial-gradient(700px 400px at 0% 40%,rgba(120,90,255,.08),transparent 60%)}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--ac);outline-offset:3px;border-radius:6px}
+.wrap{max-width:1160px;margin:0 auto;padding:0 20px}
+section{padding:84px 0}
+h1,h2,h3{font-family:var(--fd);font-weight:700;line-height:1.15;letter-spacing:-.01em}
+h2{font-size:clamp(24px,3.6vw,38px);margin-bottom:14px}
+.lead{color:var(--mu);max-width:62ch}
+
+header{position:sticky;top:0;z-index:50;background:rgba(13,15,23,.78);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.bar{display:flex;align-items:center;gap:18px;height:64px}
+.logo{display:flex;align-items:center;gap:10px;font-family:var(--fd);font-weight:700;font-size:15px}
+.logo i{display:grid;place-items:center;width:34px;height:34px;border-radius:9px;font-style:normal;font-size:13px;color:#06121a;background:var(--ac);box-shadow:0 0 18px rgba(var(--ac-rgb),.55)}
+nav{display:flex;gap:22px;margin-left:auto;font-size:14px;color:var(--mu)}
+nav a:hover{color:var(--tx)}
+.tools{display:flex;align-items:center;gap:10px}
+.sw{display:flex;gap:6px;align-items:center}
+.sw button,.sw label{width:18px;height:18px;border-radius:50%;border:2px solid transparent;cursor:pointer;background:var(--c);padding:0;transition:transform .15s}
+.sw button:hover,.sw label:hover{transform:scale(1.2)}
+.sw .on{border-color:#fff}
+.sw label{background:conic-gradient(#f55,#fc3,#5f5,#3ff,#55f,#f5f,#f55);position:relative;overflow:hidden}
+.sw input{position:absolute;inset:-6px;opacity:0;cursor:pointer}
+.btn{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--panel);color:var(--tx);padding:8px 14px;border-radius:10px;font:600 13px var(--fb);cursor:pointer;transition:.2s}
+.btn:hover{border-color:var(--ac);box-shadow:0 0 14px rgba(var(--ac-rgb),.3)}
+.btn svg{width:16px;height:16px}
+.lang{font-family:var(--fm);padding:8px 11px}
+.burger{display:none}
+
+.hero{padding:76px 0 40px;text-align:center}
+.chip{display:inline-flex;gap:8px;align-items:center;font:500 12px var(--fm);color:var(--ac);border:1px solid rgba(var(--ac-rgb),.35);background:rgba(var(--ac-rgb),.08);padding:6px 14px;border-radius:99px;margin-bottom:26px}
+.chip b{width:7px;height:7px;border-radius:50%;background:var(--ac);box-shadow:0 0 10px var(--ac)}
+h1{font-size:clamp(32px,6vw,66px);max-width:17ch;margin:0 auto 22px}
+h1 span{color:var(--ac);text-shadow:0 0 30px rgba(var(--ac-rgb),.45)}
+.hero .lead{margin:0 auto 34px;font-size:18px}
+.cta{display:inline-flex;align-items:center;gap:12px;background:var(--ac);color:#04141a;font:700 16px var(--fb);padding:16px 30px;border-radius:14px;box-shadow:0 0 0 1px rgba(255,255,255,.2) inset,0 10px 40px rgba(var(--ac-rgb),.4);transition:.2s}
+.cta:hover{transform:translateY(-2px);box-shadow:0 0 0 1px rgba(255,255,255,.3) inset,0 14px 54px rgba(var(--ac-rgb),.6)}
+.cta svg{width:20px;height:20px}
+.req{margin-top:20px;font:400 13px var(--fm);color:var(--mu)}
+.req span{margin:0 8px}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(310px,1fr));gap:16px;margin-top:40px}
+.card{padding:26px;border-radius:18px;border:1px solid var(--line);background:var(--panel);backdrop-filter:blur(10px);transition:.25s}
+.card:hover{border-color:rgba(var(--ac-rgb),.5);box-shadow:0 0 30px rgba(var(--ac-rgb),.12)}
+.ico{width:46px;height:46px;border-radius:12px;display:grid;place-items:center;margin-bottom:18px;color:var(--ac);background:rgba(var(--ac-rgb),.1);border:1px solid rgba(var(--ac-rgb),.3)}
+.ico svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.card h3{font-size:16px;margin-bottom:8px}
+.card p{color:var(--mu);font-size:14.5px}
+
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-top:40px;counter-reset:s}
+.step{position:relative;padding:28px;border-radius:18px;border:1px solid var(--line);background:var(--panel);counter-increment:s}
+.step::before{content:counter(s);display:grid;place-items:center;width:38px;height:38px;border-radius:50%;font:700 15px var(--fd);color:#04141a;background:var(--ac);box-shadow:0 0 20px rgba(var(--ac-rgb),.5);margin-bottom:18px}
+.step h3{font-size:16px;margin-bottom:8px}.step p{color:var(--mu);font-size:14.5px}
+.final{text-align:center;margin-top:46px}
+
+footer{border-top:1px solid var(--line);padding:30px 0;color:var(--mu);font-size:14px}
+footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:center}
+footer nav{margin:0}footer a:hover{color:var(--ac)}
+
+@media(max-width:860px){
+nav{display:none;position:absolute;top:64px;left:0;right:0;flex-direction:column;background:#0d0f17;padding:18px 20px;border-bottom:1px solid var(--line)}
+nav.open{display:flex}.burger{display:inline-flex;margin-left:auto}
+.bar>.logo+nav+.tools{margin-left:0}
+.sw.hd{display:none}
+section{padding:60px 0}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap bar">
+    <a class="logo" href="index.html"><i>LX</i><span>ADB & FASTBOOT</span></a>
+    <nav id="nav">
+      <a href="#features" data-i18n="n_features">Возможности</a>
+      <a href="#start" data-i18n="n_start">Быстрый старт</a>
+      <a href="downloads.html" data-i18n="n_dl">Downloads</a>
+    </nav>
+    <div class="tools">
+      <div class="sw hd" data-sw aria-label="Accent color"></div>
+      <button class="btn lang" id="lang" aria-label="Language">EN</button>
+      <a class="btn" href="https://github.com/linexin" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.52-1.33-1.28-1.69-1.28-1.69-1.05-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.76 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.18 1.83 1.18 3.09 0 4.42-2.7 5.4-5.26 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5z"/></svg>GitHub</a>
+      <button class="btn burger" id="burger" aria-label="Menu">☰</button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+<section class="hero">
+  <div class="wrap">
+    <div class="chip"><b></b><span data-i18n="chip">v1.0 · Windows 10/11</span></div>
+    <h1 data-i18n-html="h1">Прошивай Android <span>без командной строки</span></h1>
+    <p class="lead" data-i18n="lead">ADB & FASTBOOT LineXin Edition — графическая утилита, которая сама скачает Platform Tools и выполнит установку APK, прошивку GSI, recovery и Magisk в пару кликов.</p>
+    <a class="cta" href="downloads.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0l-5-5m5 5l5-5M4 20h16"/></svg>
+      <span data-i18n="dl">Перейти к загрузкам</span>
+    </a>
+    <p class="req"><span data-i18n="req1">Windows 10/11 x64</span>·<span data-i18n="req2">Кабель USB и отладка по USB</span>·<span data-i18n="req3">Бесплатно</span></p>
+  </div>
+</section>
+
+<section id="features">
+  <div class="wrap">
+    <h2 data-i18n="f_h">Всё для прошивки — в одном окне</h2>
+    <p class="lead" data-i18n="f_p">Никаких команд и поиска нужных файлов. Выберите действие, и утилита выполнит его за вас.</p>
+    <div class="grid">
+      <article class="card"><div class="ico"><svg viewBox="0 0 24 24"><path d="M12 3v12m0 0l-4-4m4 4l4-4M5 19h14"/></svg></div><h3 data-i18n="c1t">Полная автономность</h3><p data-i18n="c1p">При первом запуске программа сама скачает и распакует актуальные Google Platform Tools. Ничего настраивать не нужно.</p></article>
+      <article class="card"><div class="ico"><svg viewBox="0 0 24 24"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg></div><h3 data-i18n="c2t">ADB и Scrcpy</h3><p data-i18n="c2p">Установка APK в один клик, подключение по Wi-Fi, трансляция экрана на ПК, обход Setup Wizard и скриншоты на рабочий стол.</p></article>
+      <article class="card"><div class="ico"><svg viewBox="0 0 24 24"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg></div><h3 data-i18n="c3t">Fastboot и GSI</h3><p data-i18n="c3p">Переход в Fastbootd, прошивка GSI в системный раздел, отключение проверки vbmeta и очистка разделов.</p></article>
+      <article class="card"><div class="ico"><svg viewBox="0 0 24 24"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6z"/><path d="M9 12l2 2 4-4"/></svg></div><h3 data-i18n="c4t">Recovery и Root</h3><p data-i18n="c4p">Прошивка TWRP, OrangeFox и PBRP через Bootloader или ADB Sideload, а также установка Magisk Root.</p></article>
+      <article class="card"><div class="ico"><svg viewBox="0 0 24 24"><path d="M3 12h4l3-8 4 16 3-8h4"/></svg></div><h3 data-i18n="c5t">Мониторинг в реальном времени</h3><p data-i18n="c5p">Модель, бренд, версия Android, патч безопасности, CPU, заряд батареи и статус загрузчика — всегда перед глазами.</p></article>
+      <article class="card"><div class="ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 0 0 18c1.5 0 2-1 1.5-2s0-2 1.5-2h2a3 3 0 0 0 3-3 9 9 0 0 0-8-11z"/></svg></div><h3 data-i18n="c6t">Темы и два языка</h3><p data-i18n="c6p">Пять встроенных тем, свой цвет акцента через Color Picker и переключение RU / EN прямо во время работы.</p></article>
+    </div>
+  </div>
+</section>
+
+<section id="start">
+  <div class="wrap">
+    <h2 data-i18n="s_h">Быстрый старт</h2>
+    <p class="lead" data-i18n="s_p">От загрузки до первой прошивки — три шага.</p>
+    <div class="steps">
+      <div class="step"><h3 data-i18n="s1t">Скачайте установщик</h3><p data-i18n="s1p">Перейдите в раздел Downloads, скачайте установщик и запустите его. Platform Tools загрузятся автоматически.</p></div>
+      <div class="step"><h3 data-i18n="s2t">Подключите смартфон</h3><p data-i18n="s2p">Включите отладку по USB, подключите кабель и подтвердите доступ на устройстве.</p></div>
+      <div class="step"><h3 data-i18n="s3t">Прошивайте в один клик</h3><p data-i18n="s3p">Выберите действие на нужной вкладке, и утилита выполнит команды за вас.</p></div>
+    </div>
+    <div class="final"><a class="cta" href="downloads.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0l-5-5m5 5l5-5M4 20h16"/></svg><span data-i18n="dl">Перейти к загрузкам</span></a></div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 LineXin</span>
+    <nav style="display:flex">
+      <a href="downloads.html" data-i18n="n_dl">Downloads</a>
+      <a href="https://github.com/linexin1" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://t.me/linexin" target="_blank" rel="noopener">Telegram</a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+(function(){
+'use strict';
+var I={
+ru:{n_features:'Возможности',n_start:'Быстрый старт',n_dl:'Downloads',
+chip:'v1.0 · PyQt5 · Windows 10/11',
+h1:'Прошивай Android <span>без командной строки</span>',
+lead:'ADB & FASTBOOT LineXin Edition — графическая утилита, которая сама скачает Platform Tools и выполнит установку APK, прошивку GSI, recovery и Magisk в пару кликов.',
+dl:'Перейти к загрузкам',req1:'Windows 10/11 x64',req2:'Кабель USB и отладка по USB',req3:'Бесплатно',
+f_h:'Всё для прошивки — в одном окне',f_p:'Никаких команд и поиска нужных файлов. Выберите действие, и утилита выполнит его за вас.',
+c1t:'Полная автономность',c1p:'При первом запуске программа сама скачает и распакует актуальные Google Platform Tools. Ничего настраивать не нужно.',
+c2t:'ADB и Scrcpy',c2p:'Установка APK в один клик, подключение по Wi-Fi, трансляция экрана на ПК, обход Setup Wizard и скриншоты на рабочий стол.',
+c3t:'Fastboot и GSI',c3p:'Переход в Fastbootd, прошивка GSI в системный раздел, отключение проверки vbmeta и очистка разделов.',
+c4t:'Recovery и Root',c4p:'Прошивка TWRP, OrangeFox и PBRP через Bootloader или ADB Sideload, а также установка Magisk Root.',
+c5t:'Мониторинг в реальном времени',c5p:'Модель, бренд, версия Android, патч безопасности, CPU, заряд батареи и статус загрузчика — всегда перед глазами.',
+c6t:'Темы и два языка',c6p:'Пять встроенных тем, свой цвет акцента через Color Picker и переключение RU / EN прямо во время работы.',
+s_h:'Быстрый старт',s_p:'От загрузки до первой прошивки — три шага.',
+s1t:'Скачайте установщик',s1p:'Перейдите в раздел Downloads, скачайте установщик и запустите его. Platform Tools загрузятся автоматически.',
+s2t:'Подключите смартфон',s2p:'Включите отладку по USB, подключите кабель и подтвердите доступ на устройстве.',
+s3t:'Прошивайте в один клик',s3p:'Выберите действие на нужной вкладке, и утилита выполнит команды за вас.'},
+en:{n_features:'Features',n_start:'Quick start',n_dl:'Downloads',
+chip:'v1.0 · PyQt5 · Windows 10/11',
+h1:'Flash Android <span>without the command line</span>',
+lead:'ADB & FASTBOOT LineXin Edition is a GUI tool that downloads Platform Tools by itself and handles APK installs, GSI flashing, recoveries and Magisk in a few clicks.',
+dl:'Go to Downloads',req1:'Windows 10/11 x64',req2:'USB cable & USB debugging',req3:'Free',
+f_h:'Everything for flashing in one window',f_p:'No commands, no hunting for files. Pick an action and the tool does the rest.',
+c1t:'Fully self-contained',c1p:'On first launch the app downloads and unpacks the latest Google Platform Tools. Nothing to configure.',
+c2t:'ADB & Scrcpy',c2p:'One-click APK install, wireless ADB, screen mirroring to your PC, Setup Wizard bypass and desktop screenshots.',
+c3t:'Fastboot & GSI',c3p:'Jump to Fastbootd, flash GSI images to the system partition, disable vbmeta verification and wipe partitions.',
+c4t:'Recovery & Root',c4p:'Flash TWRP, OrangeFox and PBRP via Bootloader or ADB Sideload, and install Magisk Root.',
+c5t:'Real-time monitoring',c5p:'Model, brand, Android version, security patch, CPU, battery and bootloader status — always in view.',
+c6t:'Themes & two languages',c6p:'Five built-in themes, your own accent via Color Picker, and RU / EN switching on the fly.',
+s_h:'Quick start',s_p:'From download to your first flash in three steps.',
+s1t:'Download the installer',s1p:'Open Downloads, grab the installer and run it. Platform Tools download automatically.',
+s2t:'Connect your phone',s2p:'Enable USB debugging, plug in the cable and confirm access on the device.',
+s3t:'Flash in one click',s3p:'Choose an action on the right tab and the tool runs the commands for you.'}};
+var THEMES=['#00d8d6','#a855f7','#22c55e','#f97316','#ef4444'];
+var lang='ru';
+
+function $$(s){return Array.prototype.slice.call(document.querySelectorAll(s))}
+function hexRgb(h){var n=parseInt(h.slice(1),16);return[n>>16&255,n>>8&255,n&255].join(',')}
+function setAccent(h){var r=document.documentElement.style;r.setProperty('--ac',h);r.setProperty('--ac-rgb',hexRgb(h));
+$$('[data-sw] button').forEach(function(b){b.classList.toggle('on',b.dataset.c===h)})}
+
+$$('[data-sw]').forEach(function(box){
+THEMES.forEach(function(c){var b=document.createElement('button');b.style.setProperty('--c',c);b.dataset.c=c;b.setAttribute('aria-label',c);
+b.onclick=function(){setAccent(c)};box.appendChild(b)});
+var l=document.createElement('label');l.title='Color Picker';var i=document.createElement('input');i.type='color';i.value='#00d8d6';
+i.oninput=function(){setAccent(i.value)};l.appendChild(i);box.appendChild(l)});
+setAccent(THEMES[0]);
+
+function apply(){
+var d=I[lang];document.documentElement.lang=lang;
+$$('[data-i18n]').forEach(function(e){if(d[e.dataset.i18n]!==undefined)e.textContent=d[e.dataset.i18n]});
+$$('[data-i18n-html]').forEach(function(e){e.innerHTML=d[e.dataset.i18nHtml]});
+document.getElementById('lang').textContent=lang==='ru'?'EN':'RU';}
+document.getElementById('lang').onclick=function(){lang=lang==='ru'?'en':'ru';apply()};
+
+var nav=document.getElementById('nav');
+document.getElementById('burger').onclick=function(){nav.classList.toggle('open')};
+$$('#nav a').forEach(function(a){a.onclick=function(){nav.classList.remove('open')}});
+
+apply();
+})();
+</script>
+</body>
+</html>
